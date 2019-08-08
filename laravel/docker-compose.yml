@@ -1,0 +1,24 @@
+version: "3"
+services:
+
+  nginx:
+    image: nginx
+    volumes:
+      - "./nginx/conf.d:/etc/nginx/conf.d"
+      - "./nginx/html:/usr/share/html"
+    ports:
+      - "80:80"
+    command: /bin/bash -c "exec nginx -g 'daemon off;' "
+
+  redis:
+    image: redis:5.0.5
+    volumes:
+      - "./redis/data:/data"
+      - "./redis/redis.conf:/etc/redis/redis.conf"
+    environment:
+      - TZ=Asia/Shanghai
+    ports:
+      - "6379:6379"
+    command: redis-server /etc/redis/redis.conf
+    tty: true
+    
